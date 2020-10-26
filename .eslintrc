@@ -25,16 +25,18 @@
     "no-console": 1,
     "semi": 0,
     "comma-dangle": 0,
+    "no-prototype-builtins": 0,
     "operator-linebreak": [
       2,
       "before",
       { "overrides": { "?": "after", "&&": "after" } }
     ],
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": [1, "unix"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [1, { "devDependencies": true }],
+    "implicit-arrow-linebreak": [0, "below"],
     "react/destructuring-assignment": [
-      2,
+      1,
       "always",
       { "ignoreClassFields": true }
     ]
