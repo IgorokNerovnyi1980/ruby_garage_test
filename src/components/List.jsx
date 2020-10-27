@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  min-height: 10rem;
+  min-height: 8rem;
   border-radius: 0 0 1rem 1rem;
   background-color: ${(p) => p.theme.main};
 `

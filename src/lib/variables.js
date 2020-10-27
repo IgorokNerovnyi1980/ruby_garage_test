@@ -4,10 +4,11 @@ export const baseBG = {
   accent: '#5082b8',
   error: '#f3b6c5',
   success: '#70a789',
-  werning: 'yellow',
+  warning: 'yellow',
   form: '#dedede',
   selected: '#fcfed5',
   text: '#9f9f9f',
+  icon: '#44597c',
 }
 
 export const FS = {

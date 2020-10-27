@@ -20,6 +20,17 @@ const Wrapper = styled.span`
     height: ${(p) => p.height};
     fill: ${(p) => p.theme[p.color]};
   }
+  transition: 0.2s ease;
+  :active {
+    transform: scale(0.95);
+  }
+  ${(p) =>
+    p.rotate &&
+    `
+   svg{
+       transform: rotate(180deg);
+  }
+`};
 `
 export default ({
   name = 'add',
@@ -27,6 +38,7 @@ export default ({
   style = null,
   width = '3rem',
   height = '3rem',
+  rotate = false,
   onClick = () => {},
 }) =>
   useMemo(
@@ -39,6 +51,7 @@ export default ({
           onClick={onClick}
           width={width}
           height={height}
+          rotate={rotate}
         >
           {icons[name]}
         </Wrapper>
