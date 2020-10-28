@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 import Header from './Header'
 import Form from './Form'
 import Row from './Row'
@@ -9,31 +10,30 @@ const Wrapper = styled.div`
   margin-bottom: 3rem;
   background: none;
 `
-
 const Content = styled.div`
   width: 100%;
   min-height: 8rem;
   border-radius: 0 0 1rem 1rem;
   background-color: ${(p) => p.theme.main};
 `
-
 const defaultObj = {
   label: 'Test list',
   id: '1',
-  content: [
-    { body: 'first todo', id: '11' },
-    { body: 'second todo', id: '22' },
-  ],
 }
-
-const List = ({ todo = defaultObj }) => (
-  <Wrapper>
-    <Header label={todo.label} />
-    <Form />
-    <Content>
-      {todo.content.length > 0 &&
-        todo.content.map((item) => <Row key={item.id} obj={item} />)}
-    </Content>
-  </Wrapper>
-)
+const List = ({ todo = defaultObj }) => {
+  const tasks = useSelector((s) =>
+    s.tasks.tasks.filter((task) => task.relation === todo.id)
+  )
+  return (
+    <Wrapper>
+      <Header label={todo.label} />
+      <Form />
+      <Content>
+        {tasks &&
+          tasks.length > 0 &&
+          tasks.map((item) => <Row key={item.id} obj={item} />)}
+      </Content>
+    </Wrapper>
+  )
+}
 export default List

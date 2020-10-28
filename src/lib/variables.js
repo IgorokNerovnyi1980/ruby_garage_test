@@ -23,6 +23,7 @@ export const FS = {
 }
 export const other = {
   sidePad: '1.5rem',
+  boxShadow: '0px 2px 5px 1px rgba(140,132,140,1)',
   todoBgGradient:
     'linear-gradient(to bottom, rgba(207, 205, 182, 1) 0%, rgba(207, 205, 182, 1) 38%, rgba(237, 144, 23, 1) 100%)',
 }

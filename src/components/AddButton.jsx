@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import Icon from './Icon'
 
 const Wrapper = styled.button`
+  ${(p) =>
+    p.toBottom &&
+    `
   margin-top: auto;
+`};
+
   padding-top: 1.5rem;
   padding-left: ${(p) => p.theme.sidePad};
   padding-right: ${(p) => p.theme.sidePad};
@@ -16,10 +21,15 @@ const Wrapper = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  :active {
+    transform: scale(0.98);
+  }
 `
 
-const AddTodoList = () => (
-  <Wrapper>
+const AddTodoList = ({ onAction = () => {}, toBottom = false }) => (
+  <Wrapper onClick={onAction} toBottom={toBottom}>
     <Icon
       name="add"
       color="icon"

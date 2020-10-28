@@ -117,7 +117,7 @@ const Row = ({ obj = defaultObj }) => (
             width="0.7rem"
             height="0.7rem"
             style={{ cursor: 'pointer' }}
-            rotate
+            rotate={1}
           />
         </Arrows>
       </IconWrp>

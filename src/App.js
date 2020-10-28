@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import TodoApp from './pages/TodoApp'
+import Creator from './components/Creator'
 import themes from './lib/themes'
 
 const GlobalStyle = createGlobalStyle`
@@ -61,10 +62,12 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const currentTheme = useSelector((s) => s.general.theme)
+  const isShow = useSelector((s) => s.general.isCreator)
   return (
     <ThemeProvider theme={themes[currentTheme]}>
       <GlobalStyle />
       <TodoApp />
+      {isShow && <Creator />}
     </ThemeProvider>
   )
 }

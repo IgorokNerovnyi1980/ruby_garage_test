@@ -38,7 +38,7 @@ export default ({
   style = null,
   width = '3rem',
   height = '3rem',
-  rotate = false,
+  rotate = 0,
   onClick = () => {},
 }) =>
   useMemo(

@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import Title from './Title'
-import AddTodoList from './AddTodoList'
+import AddButton from './AddButton'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,12 +22,15 @@ const Content = styled.div`
   max-width: 80rem;
 `
 
-const Layout = ({ children = () => {} }) => (
-  <Wrapper>
-    <Title title="Simple todo lists" subTitle="from ruby garage" />
-    <Content>{children}</Content>
-    <AddTodoList />
-  </Wrapper>
-)
+const Layout = ({ children = () => {} }) => {
+  const dispatch = useDispatch()
+  return (
+    <Wrapper>
+      <Title title="Simple todo lists" subTitle="from ruby garage" />
+      <Content>{children}</Content>
+      <AddButton onAction={() => dispatch({ type: 'OPEN_CREATOR' })} toBottom />
+    </Wrapper>
+  )
+}
 
 export default Layout
