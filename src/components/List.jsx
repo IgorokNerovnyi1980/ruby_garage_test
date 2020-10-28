@@ -29,7 +29,7 @@ const defaultObj = {
 const List = ({ todo = defaultObj }) => (
   <Wrapper>
     <Header label={todo.label} />
-    <Form label="search block" />
+    <Form />
     <Content>
       {todo.content.length > 0 &&
         todo.content.map((item) => <Row key={item.id} obj={item} />)}

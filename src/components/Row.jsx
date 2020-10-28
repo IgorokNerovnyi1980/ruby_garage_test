@@ -75,12 +75,17 @@ const ActionWrp = styled.div`
   align-items: center;
 `
 const IconWrp = styled.div`
-  width: 1.5rem;
+  width: 33%;
   height: 1.5rem;
   border-right: 0.1rem solid ${(p) => p.theme.form};
   :last-child {
     border-right: none;
   }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const Arrows = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,26 +103,41 @@ const Row = ({ obj = defaultObj }) => (
     <Body>{obj.body}</Body>
     <ActionWrp>
       <IconWrp>
+        <Arrows>
+          <Icon
+            name="triangle"
+            color="text"
+            width="0.7rem"
+            height="0.7rem"
+            style={{ cursor: 'pointer' }}
+          />
+          <Icon
+            name="triangle"
+            color="text"
+            width="0.7rem"
+            height="0.7rem"
+            style={{ cursor: 'pointer' }}
+            rotate
+          />
+        </Arrows>
+      </IconWrp>
+      <IconWrp>
         <Icon
-          name="triangle"
+          name="pen"
           color="text"
-          width="0.7rem"
-          height="0.7rem"
-          style={{ marginBottom: '0.2rem' }}
-        />
-        <Icon
-          name="triangle"
-          color="text"
-          width="0.7rem"
-          height="0.7rem"
-          rotate
+          width="1rem"
+          height="1rem"
+          style={{ cursor: 'pointer' }}
         />
       </IconWrp>
       <IconWrp>
-        <Icon name="pen" color="text" width="1rem" height="1rem" />
-      </IconWrp>
-      <IconWrp>
-        <Icon name="delete" color="text" width="1rem" height="1rem" />
+        <Icon
+          name="delete"
+          color="text"
+          width="1rem"
+          height="1rem"
+          style={{ cursor: 'pointer' }}
+        />
       </IconWrp>
     </ActionWrp>
   </Wrapper>
