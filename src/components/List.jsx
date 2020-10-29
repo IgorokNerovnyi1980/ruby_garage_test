@@ -12,13 +12,14 @@ const Wrapper = styled.div`
 `
 const Content = styled.div`
   width: 100%;
-  min-height: 8rem;
-  border-radius: 0 0 1rem 1rem;
+  :last-child {
+    border-radius: 0 0 1rem 1rem;
+  }
   background-color: ${(p) => p.theme.main};
 `
 const defaultObj = {
   label: 'Test list',
-  id: '1',
+  id: '',
 }
 const List = ({ todo = defaultObj }) => {
   const tasks = useSelector((s) =>

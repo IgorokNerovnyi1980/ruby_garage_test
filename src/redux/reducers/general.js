@@ -3,6 +3,7 @@ import Type from '../types'
 const initialState = {
   theme: 'base',
   isCreator: false,
+  currentRow: null,
 }
 
 export default (state = initialState, action) => {
@@ -21,6 +22,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isCreator: false,
+      }
+    case Type.SET_ACTIVE_TASK:
+      return {
+        ...state,
+        currentRow: action.payload,
       }
 
     default:

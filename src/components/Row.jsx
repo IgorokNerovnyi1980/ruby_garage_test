@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Icon from './Icon'
 
@@ -10,9 +11,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: ${(p) => (p.isActive ? p.theme.selected : p.theme.main)};
   border-top: 0.1rem solid ${(p) => p.theme.form};
   :first-child {
     border-top: none;
+  }
+  :last-child {
+    border-radius: 0 0 1rem 1rem;
   }
 `
 const CheckWrp = styled.div`
@@ -56,6 +61,7 @@ const Checkbox = styled.div`
   `};
 `
 const Body = styled.p`
+  width: 100%;
   height: 100%;
   padding-left: 2rem;
   border-left: 0.1rem solid ${(p) => p.theme.error};
@@ -63,6 +69,7 @@ const Body = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 `
 const ActionWrp = styled.div`
   width: 10rem;
@@ -93,53 +100,69 @@ const Arrows = styled.div`
 `
 const defaultObj = {
   body: 'some todo ..',
+  id: '11',
 }
 
-const Row = ({ obj = defaultObj }) => (
-  <Wrapper>
-    <CheckWrp isChecked={false}>
-      <Checkbox />
-    </CheckWrp>
-    <Body>{obj.body}</Body>
-    <ActionWrp>
-      <IconWrp>
-        <Arrows>
+const Row = ({ obj = defaultObj }) => {
+  const dispatch = useDispatch()
+  const isActive = useSelector((s) => s.general.currentRow)
+  const setCurrentRow = () => {
+    if (isActive === obj.id) {
+      dispatch({ type: 'SET_ACTIVE_TASK', payload: null })
+    } else {
+      dispatch({ type: 'SET_ACTIVE_TASK', payload: obj.id })
+    }
+  }
+  const deleteRow = () => {
+    dispatch({ type: 'DELETE_TASK', payload: obj.id })
+  }
+  return (
+    <Wrapper isActive={isActive === obj.id}>
+      <CheckWrp onClick={setCurrentRow}>
+        <Checkbox isChecked={isActive === obj.id} />
+      </CheckWrp>
+      <Body onClick={setCurrentRow}>{obj.body}</Body>
+      <ActionWrp>
+        <IconWrp>
+          <Arrows>
+            <Icon
+              name="triangle"
+              color="text"
+              width="0.7rem"
+              height="0.7rem"
+              style={{ cursor: 'pointer' }}
+            />
+            <Icon
+              name="triangle"
+              color="text"
+              width="0.7rem"
+              height="0.7rem"
+              style={{ cursor: 'pointer' }}
+              rotate={1}
+            />
+          </Arrows>
+        </IconWrp>
+        <IconWrp>
           <Icon
-            name="triangle"
+            name="pen"
             color="text"
-            width="0.7rem"
-            height="0.7rem"
+            width="1rem"
+            height="1rem"
             style={{ cursor: 'pointer' }}
           />
+        </IconWrp>
+        <IconWrp>
           <Icon
-            name="triangle"
+            name="delete"
             color="text"
-            width="0.7rem"
-            height="0.7rem"
+            width="1rem"
+            height="1rem"
             style={{ cursor: 'pointer' }}
-            rotate={1}
+            onClick={deleteRow}
           />
-        </Arrows>
-      </IconWrp>
-      <IconWrp>
-        <Icon
-          name="pen"
-          color="text"
-          width="1rem"
-          height="1rem"
-          style={{ cursor: 'pointer' }}
-        />
-      </IconWrp>
-      <IconWrp>
-        <Icon
-          name="delete"
-          color="text"
-          width="1rem"
-          height="1rem"
-          style={{ cursor: 'pointer' }}
-        />
-      </IconWrp>
-    </ActionWrp>
-  </Wrapper>
-)
+        </IconWrp>
+      </ActionWrp>
+    </Wrapper>
+  )
+}
 export default Row
