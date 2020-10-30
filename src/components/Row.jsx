@@ -103,7 +103,7 @@ const defaultObj = {
   id: '11',
 }
 
-const Row = ({ obj = defaultObj }) => {
+const Row = ({ obj = defaultObj, editTask = () => {} }) => {
   const dispatch = useDispatch()
   const isActive = useSelector((s) => s.general.currentRow)
   const setCurrentRow = () => {
@@ -115,6 +115,7 @@ const Row = ({ obj = defaultObj }) => {
   }
   const deleteRow = () => {
     dispatch({ type: 'DELETE_TASK', payload: obj.id })
+    dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
   return (
     <Wrapper isActive={isActive === obj.id}>
@@ -149,6 +150,7 @@ const Row = ({ obj = defaultObj }) => {
             width="1rem"
             height="1rem"
             style={{ cursor: 'pointer' }}
+            onClick={() => editTask(obj.body, obj.id)}
           />
         </IconWrp>
         <IconWrp>

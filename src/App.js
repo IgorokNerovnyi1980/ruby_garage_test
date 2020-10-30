@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useLayoutEffect, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import TodoApp from './pages/TodoApp'
 import Creator from './components/Creator'
@@ -61,8 +61,27 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const App = () => {
+  const dispatch = useDispatch()
   const currentTheme = useSelector((s) => s.general.theme)
+  const needUpdate = useSelector((s) => s.general.flag)
   const isShow = useSelector((s) => s.general.isCreator)
+  const todos = useSelector((s) => s.todos.todos)
+  const tasks = useSelector((s) => s.tasks.tasks)
+  const localStorageToStore = () => {
+    const isData = localStorage.getItem('rubyTodos')
+    if (isData) {
+      dispatch({ type: 'SET_DATA', payload: JSON.parse(isData) })
+    }
+  }
+  const storeToLocalStorage = () => {
+    localStorage.setItem('rubyTodos', JSON.stringify({ todos, tasks }))
+  }
+  useLayoutEffect(() => {
+    localStorageToStore()
+  }, [])
+  useEffect(() => {
+    if (needUpdate) storeToLocalStorage()
+  }, [needUpdate])
   return (
     <ThemeProvider theme={themes[currentTheme]}>
       <GlobalStyle />

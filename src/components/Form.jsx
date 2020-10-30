@@ -32,7 +32,7 @@ const Submit = styled.button`
   border-radius: 0 0.3rem 0.3rem 0;
 `
 
-const Form = () => (
+const Form = ({ onSubmit = () => {}, onChange = () => {}, value = '' }) => (
   <Wrapper>
     <Icon
       name="add"
@@ -41,8 +41,12 @@ const Form = () => (
       height="2rem"
       style={{ marginTop: '0.5rem', marginRight: '1rem' }}
     />
-    <Input placeholder="start typing here to create a task..." />
-    <Submit>Add task</Submit>
+    <Input
+      placeholder="start typing here to create a task..."
+      onChange={onChange}
+      value={value}
+    />
+    <Submit onClick={() => onSubmit()}>Add task</Submit>
   </Wrapper>
 )
 export default Form

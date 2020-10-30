@@ -4,15 +4,17 @@ const initialState = {
   theme: 'base',
   isCreator: false,
   currentRow: null,
+  flag: null,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case Type.SET_THEME:
+    case Type.UPDATE_LOCALSTORAGE:
       return {
         ...state,
-        theme: action.payload,
+        flag: state.flag + 1,
       }
+
     case Type.OPEN_CREATOR:
       return {
         ...state,

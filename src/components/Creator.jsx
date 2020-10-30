@@ -56,10 +56,11 @@ const Creator = () => {
         type: 'CREATE_TODO',
         payload: {
           label: value,
-          id: quantity + 1,
+          id: String(quantity + 1),
         },
       })
       dispatch({ type: 'CLOSE_CREATOR' })
+      dispatch({ type: 'UPDATE_LOCALSTORAGE' })
     }
     setValue('')
   }
