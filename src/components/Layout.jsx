@@ -19,7 +19,6 @@ const Wrapper = styled.div`
 `
 const Content = styled.div`
   width: 95%;
-  max-width: 80rem;
 `
 
 const Layout = ({ children = () => {} }) => {

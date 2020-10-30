@@ -40,6 +40,7 @@ const List = ({ todo = defaultObj }) => {
           body: value,
           id: `${todo.id}${tasks.length + 1}`,
           relation: todo.id,
+          isDone: false,
         },
       })
       dispatch({ type: 'UPDATE_LOCALSTORAGE' })

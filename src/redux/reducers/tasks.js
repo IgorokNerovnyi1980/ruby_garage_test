@@ -21,6 +21,22 @@ export default (state = initialState, action) => {
         ...state,
         tasks: state.tasks.filter((task) => task.id !== action.payload),
       }
+    case Type.DELETE_TODO_LIST:
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.relation !== action.payload),
+      }
+
+    case Type.TOGGLE_STATUS_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload) {
+            return { ...task, isDone: !task.isDone }
+          }
+          return task
+        }),
+      }
 
     default:
       return state

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import Icon from './Icon'
 
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(p) => (p.isActive ? p.theme.selected : p.theme.main)};
+  background-color: ${(p) => (p.isDone ? p.theme.selected : p.theme.main)};
   border-top: 0.1rem solid ${(p) => p.theme.form};
   :first-child {
     border-top: none;
@@ -101,28 +101,25 @@ const Arrows = styled.div`
 const defaultObj = {
   body: 'some todo ..',
   id: '11',
+  isDone: false,
 }
 
 const Row = ({ obj = defaultObj, editTask = () => {} }) => {
   const dispatch = useDispatch()
-  const isActive = useSelector((s) => s.general.currentRow)
-  const setCurrentRow = () => {
-    if (isActive === obj.id) {
-      dispatch({ type: 'SET_ACTIVE_TASK', payload: null })
-    } else {
-      dispatch({ type: 'SET_ACTIVE_TASK', payload: obj.id })
-    }
+  const togglerIsDone = () => {
+    dispatch({ type: 'TOGGLE_STATUS_TASK', payload: obj.id })
+    dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
   const deleteRow = () => {
     dispatch({ type: 'DELETE_TASK', payload: obj.id })
     dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
   return (
-    <Wrapper isActive={isActive === obj.id}>
-      <CheckWrp onClick={setCurrentRow}>
-        <Checkbox isChecked={isActive === obj.id} />
+    <Wrapper isDone={obj.isDone}>
+      <CheckWrp onClick={togglerIsDone}>
+        <Checkbox isChecked={obj.isDone} />
       </CheckWrp>
-      <Body onClick={setCurrentRow}>{obj.body}</Body>
+      <Body>{obj.body}</Body>
       <ActionWrp>
         <IconWrp>
           <Arrows>
