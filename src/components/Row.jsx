@@ -61,7 +61,7 @@ const Checkbox = styled.div`
   `};
 `
 const Body = styled.p`
-  width: 100%;
+  width: 80%;
   height: 100%;
   padding-left: 2rem;
   border-left: 0.1rem solid ${(p) => p.theme.error};
@@ -69,6 +69,9 @@ const Body = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
 `
 const Input = styled.input`
@@ -76,6 +79,15 @@ const Input = styled.input`
   height: 100%;
   padding-left: 2rem;
   border-left: 0.1rem solid ${(p) => p.theme.error};
+`
+const DedLine = styled.button`
+  width: 5rem;
+  margin-right: 1rem;
+  padding-bottom: 0.2rem;
+  font-size: ${(p) => p.theme.h8};
+  color: ${(p) => p.theme.accent};
+  border-bottom: 0.1rem solid ${(p) => p.theme.accent};
+  cursor: pointer;
 `
 const ActionWrp = styled.div`
   width: 10rem;
@@ -133,6 +145,10 @@ const Row = ({ obj = defaultTask }) => {
     dispatch({ type: 'DELETE_TASK', payload: obj.id })
     dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
+  const setDedline = (id) => {
+    dispatch({ type: 'OPEN_CALENDAR' })
+    dispatch({ type: 'SET_TASK_ID', payload: id })
+  }
   const [value, setValue] = useState('')
   const [isEdit, setIsEdit] = useState(false)
   const [currentTask, setCurrentTask] = useState(null)
@@ -182,7 +198,12 @@ const Row = ({ obj = defaultTask }) => {
       {isEdit ? (
         <Input ref={myInput} value={value} onChange={onChangeInput} />
       ) : (
-        <Body>{obj.body}</Body>
+        <>
+          <Body>{obj.body}</Body>
+          <DedLine onClick={() => setDedline(obj.id)}>
+            {obj.dedLine && obj.dedLine !== null ? obj.dedLine : 'set date'}
+          </DedLine>
+        </>
       )}
 
       {isEdit ? (

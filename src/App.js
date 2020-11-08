@@ -4,6 +4,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import TodoApp from './pages/TodoApp'
 import Creator from './components/Creator'
 import themes from './lib/themes'
+import Calendar from './components/Calendar'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -64,7 +65,8 @@ const App = () => {
   const dispatch = useDispatch()
   const currentTheme = useSelector((s) => s.general.theme)
   const needUpdate = useSelector((s) => s.general.flag)
-  const isShow = useSelector((s) => s.general.isCreator)
+  const isCreator = useSelector((s) => s.general.isCreator)
+  const isCalendar = useSelector((s) => s.general.isCalendar)
   const todos = useSelector((s) => s.todos.todos)
   const tasks = useSelector((s) => s.tasks.tasks)
   const localStorageToStore = () => {
@@ -86,7 +88,8 @@ const App = () => {
     <ThemeProvider theme={themes[currentTheme]}>
       <GlobalStyle />
       <TodoApp />
-      {isShow && <Creator />}
+      {isCreator && <Creator />}
+      {isCalendar && <Calendar />}
     </ThemeProvider>
   )
 }
