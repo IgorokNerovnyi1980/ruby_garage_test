@@ -1,4 +1,5 @@
 import Type from '../types'
+import sortValue from '../../lib/helpers/sortValue'
 
 const initialState = {
   tasks: [],
@@ -21,6 +22,16 @@ export default (state = initialState, action) => {
         ...state,
         tasks: state.tasks.filter((task) => task.id !== action.payload),
       }
+    case Type.EDIT_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.id) {
+            return action.task
+          }
+          return task
+        }),
+      }
     case Type.DELETE_TODO_LIST:
       return {
         ...state,
@@ -33,6 +44,19 @@ export default (state = initialState, action) => {
         tasks: state.tasks.map((task) => {
           if (task.id === action.payload) {
             return { ...task, isDone: !task.isDone }
+          }
+          return task
+        }),
+      }
+    case Type.SORT_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.id) {
+            return {
+              ...task,
+              sort: sortValue(task.sort, state.tasks.length, action.action),
+            }
           }
           return task
         }),

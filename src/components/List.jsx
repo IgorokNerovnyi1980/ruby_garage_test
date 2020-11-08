@@ -17,14 +17,16 @@ const Content = styled.div`
   }
   background-color: ${(p) => p.theme.main};
 `
-const defaultObj = {
+const defaultList = {
   label: 'Test list',
   id: '',
 }
-const List = ({ todo = defaultObj }) => {
+const List = ({ todo = defaultList }) => {
   const dispatch = useDispatch()
   const tasks = useSelector((s) =>
-    s.tasks.tasks.filter((task) => task.relation === todo.id)
+    s.tasks.tasks
+      .filter((task) => task.relation === todo.id)
+      .sort((a, b) => a.sort - b.sort)
   )
   const [value, setValue] = useState('')
   const onChangeInput = (e) => {
@@ -41,16 +43,12 @@ const List = ({ todo = defaultObj }) => {
           id: `${todo.id}${tasks.length + 1}`,
           relation: todo.id,
           isDone: false,
+          sort: Number(todo.id) + tasks.length,
         },
       })
       dispatch({ type: 'UPDATE_LOCALSTORAGE' })
     }
     setValue('')
-  }
-  const editTask = (body, id) => {
-    setValue(body)
-    dispatch({ type: 'DELETE_TASK', payload: id })
-    dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
   return (
     <Wrapper>
@@ -59,9 +57,7 @@ const List = ({ todo = defaultObj }) => {
       <Content>
         {tasks &&
           tasks.length > 0 &&
-          tasks.map((item) => (
-            <Row key={item.id} obj={item} editTask={editTask} />
-          ))}
+          tasks.map((item) => <Row key={item.id} obj={item} />)}
       </Content>
     </Wrapper>
   )

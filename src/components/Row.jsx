@@ -1,5 +1,5 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Icon from './Icon'
 
@@ -71,6 +71,12 @@ const Body = styled.p`
   align-items: center;
   cursor: pointer;
 `
+const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  padding-left: 2rem;
+  border-left: 0.1rem solid ${(p) => p.theme.error};
+`
 const ActionWrp = styled.div`
   width: 10rem;
   height: 100%;
@@ -80,6 +86,15 @@ const ActionWrp = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
+const SubmitBtn = styled.button`
+  width: 10rem;
+  height: 100%;
+  background-color: ${(p) => p.theme.success};
+  color: ${(p) => p.theme.main};
+  font-size: ${(p) => p.theme.h5};
+  font-weight: 700;
+  border-radius: 0 0.3rem 0.3rem 0;
 `
 const IconWrp = styled.div`
   width: 33%;
@@ -98,14 +113,18 @@ const Arrows = styled.div`
   justify-content: center;
   align-items: center;
 `
-const defaultObj = {
+const defaultTask = {
   body: 'some todo ..',
   id: '11',
   isDone: false,
+  relation: '1',
+  sort: 1,
 }
 
-const Row = ({ obj = defaultObj, editTask = () => {} }) => {
+const Row = ({ obj = defaultTask }) => {
   const dispatch = useDispatch()
+  const myInput = useRef(null)
+  const tasks = useSelector((s) => s.tasks.tasks)
   const togglerIsDone = () => {
     dispatch({ type: 'TOGGLE_STATUS_TASK', payload: obj.id })
     dispatch({ type: 'UPDATE_LOCALSTORAGE' })
@@ -114,53 +133,105 @@ const Row = ({ obj = defaultObj, editTask = () => {} }) => {
     dispatch({ type: 'DELETE_TASK', payload: obj.id })
     dispatch({ type: 'UPDATE_LOCALSTORAGE' })
   }
+  const [value, setValue] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
+  const [currentTask, setCurrentTask] = useState(null)
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value)
+  }
+
+  const sortTask = (id, action) => {
+    dispatch({
+      type: 'SORT_TASK',
+      id,
+      action,
+    })
+    dispatch({ type: 'UPDATE_LOCALSTORAGE' })
+  }
+
+  const editTask = (id) => {
+    setIsEdit(true)
+    setCurrentTask(tasks.find((task) => task.id === id))
+  }
+  const saveChange = () => {
+    if (value.length <= 0) {
+      alert('Please write more symbols') //eslint-disable-line
+    } else {
+      dispatch({
+        type: 'EDIT_TASK',
+        task: { ...currentTask, body: value },
+        id: currentTask.id,
+      })
+      setIsEdit(false)
+      setCurrentTask(null)
+      setValue('')
+      dispatch({ type: 'UPDATE_LOCALSTORAGE' })
+    }
+  }
+  useEffect(() => {
+    if (isEdit) {
+      myInput.current.focus()
+    }
+  }, [isEdit])
   return (
     <Wrapper isDone={obj.isDone}>
       <CheckWrp onClick={togglerIsDone}>
         <Checkbox isChecked={obj.isDone} />
       </CheckWrp>
-      <Body>{obj.body}</Body>
-      <ActionWrp>
-        <IconWrp>
-          <Arrows>
+      {isEdit ? (
+        <Input ref={myInput} value={value} onChange={onChangeInput} />
+      ) : (
+        <Body>{obj.body}</Body>
+      )}
+
+      {isEdit ? (
+        <SubmitBtn onClick={saveChange}>Save Change</SubmitBtn>
+      ) : (
+        <ActionWrp>
+          <IconWrp>
+            <Arrows>
+              <Icon
+                name="triangle"
+                color="text"
+                width="0.7rem"
+                height="0.7rem"
+                style={{ cursor: 'pointer' }}
+                onClick={() => sortTask(obj.id, 'down')}
+              />
+              <Icon
+                name="triangle"
+                color="text"
+                width="0.7rem"
+                height="0.7rem"
+                style={{ cursor: 'pointer' }}
+                rotate={1}
+                onClick={() => sortTask(obj.id, 'up')}
+              />
+            </Arrows>
+          </IconWrp>
+          <IconWrp>
             <Icon
-              name="triangle"
+              name="pen"
               color="text"
-              width="0.7rem"
-              height="0.7rem"
+              width="1rem"
+              height="1rem"
               style={{ cursor: 'pointer' }}
+              onClick={() => editTask(obj.id)}
             />
+          </IconWrp>
+          <IconWrp>
             <Icon
-              name="triangle"
+              name="delete"
               color="text"
-              width="0.7rem"
-              height="0.7rem"
+              width="1rem"
+              height="1rem"
               style={{ cursor: 'pointer' }}
-              rotate={1}
+              onClick={deleteRow}
             />
-          </Arrows>
-        </IconWrp>
-        <IconWrp>
-          <Icon
-            name="pen"
-            color="text"
-            width="1rem"
-            height="1rem"
-            style={{ cursor: 'pointer' }}
-            onClick={() => editTask(obj.body, obj.id)}
-          />
-        </IconWrp>
-        <IconWrp>
-          <Icon
-            name="delete"
-            color="text"
-            width="1rem"
-            height="1rem"
-            style={{ cursor: 'pointer' }}
-            onClick={deleteRow}
-          />
-        </IconWrp>
-      </ActionWrp>
+          </IconWrp>
+        </ActionWrp>
+      )}
     </Wrapper>
   )
 }
