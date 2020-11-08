@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/ruby_garage_test/static/js/main.e1819048.chunk.js",
-    "main.js.map": "/ruby_garage_test/static/js/main.e1819048.chunk.js.map",
+    "main.js": "/ruby_garage_test/static/js/main.0c0129e0.chunk.js",
+    "main.js.map": "/ruby_garage_test/static/js/main.0c0129e0.chunk.js.map",
     "runtime-main.js": "/ruby_garage_test/static/js/runtime-main.103a5237.js",
     "runtime-main.js.map": "/ruby_garage_test/static/js/runtime-main.103a5237.js.map",
-    "static/js/2.96c21d2a.chunk.js": "/ruby_garage_test/static/js/2.96c21d2a.chunk.js",
-    "static/js/2.96c21d2a.chunk.js.map": "/ruby_garage_test/static/js/2.96c21d2a.chunk.js.map",
+    "static/js/2.db32bca6.chunk.js": "/ruby_garage_test/static/js/2.db32bca6.chunk.js",
+    "static/js/2.db32bca6.chunk.js.map": "/ruby_garage_test/static/js/2.db32bca6.chunk.js.map",
     "index.html": "/ruby_garage_test/index.html",
-    "static/js/2.96c21d2a.chunk.js.LICENSE.txt": "/ruby_garage_test/static/js/2.96c21d2a.chunk.js.LICENSE.txt",
+    "static/js/2.db32bca6.chunk.js.LICENSE.txt": "/ruby_garage_test/static/js/2.db32bca6.chunk.js.LICENSE.txt",
     "static/media/add.e5221a32.svg": "/ruby_garage_test/static/media/add.e5221a32.svg",
     "static/media/calendar.7321f0ba.svg": "/ruby_garage_test/static/media/calendar.7321f0ba.svg",
     "static/media/delete.4b93a41b.svg": "/ruby_garage_test/static/media/delete.4b93a41b.svg",
@@ -16,7 +16,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.103a5237.js",
-    "static/js/2.96c21d2a.chunk.js",
-    "static/js/main.e1819048.chunk.js"
+    "static/js/2.db32bca6.chunk.js",
+    "static/js/main.0c0129e0.chunk.js"
   ]
 }
